@@ -22,18 +22,6 @@ repositories {
     maven("https://papermc.io/repo/repository/maven-public/")
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = project.group.toString()
-            artifactId = project.name
-            version = project.version.toString()
-
-            from(components["java"])
-        }
-    }
-}
-
 dependencies {
     implementation("com.squareup", "kotlinpoet", "1.12.0")
     implementation("com.squareup", "kotlinpoet-ksp", "1.12.0")
@@ -42,6 +30,12 @@ dependencies {
     ksp("dev.zacsweers.autoservice", "auto-service-ksp", "1.0.0")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+with(tasks) {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "17"
+    }
+
+    shadowJar {
+        archiveFileName.set("${project.name}-${project.version}-plugin.jar")
+    }
 }
