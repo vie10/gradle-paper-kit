@@ -30,6 +30,19 @@ dependencies {
     ksp("dev.zacsweers.autoservice", "auto-service-ksp", "1.0.0")
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "online.viestudio"
+            artifactId = "paper-kit"
+            version = version
+
+            from(components["java"])
+            artifact(tasks.kotlinSourcesJar)
+        }
+    }
+}
+
 with(tasks) {
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
