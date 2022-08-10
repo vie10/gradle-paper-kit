@@ -2,6 +2,7 @@ package online.viestudio.paperkit.ksp
 
 import com.google.devtools.ksp.closestClassDeclaration
 import com.google.devtools.ksp.processing.CodeGenerator
+import com.google.devtools.ksp.processing.Dependencies
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFile
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
@@ -114,7 +115,7 @@ internal class PaperKitPluginBuilder {
     }
 
     fun write(codeGenerator: CodeGenerator) {
-        build().writeTo(codeGenerator, true, origins)
+        build().writeTo(codeGenerator, Dependencies.ALL_FILES)
     }
 
     private fun build() = FileSpec.builder(CLASS_PACKAGE, CLASS_NAME).addType(classType).build()
