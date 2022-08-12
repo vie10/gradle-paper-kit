@@ -55,7 +55,8 @@ internal class PaperKitProcessor(
     private inner class ServiceVisitor : KSVisitorVoid() {
 
         override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
-            val isListener = classDeclaration.getAllSuperTypes().any { it.toTypeName() == Type.KIT_LISTENER }
+            val isListener =
+                classDeclaration.getAllSuperTypes().any { it.toTypeName().toString() == Type.KIT_LISTENER.toString() }
             if (!isListener) return
             builder.export(classDeclaration, classDeclaration.asStarProjectedType())
             builder.callOnStart {
