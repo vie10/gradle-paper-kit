@@ -1,15 +1,18 @@
 package online.viestudio.paperkit.ksp
 
+import com.google.devtools.ksp.getAllSuperTypes
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.*
 import com.google.devtools.ksp.validate
+import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.toTypeName
 import online.viestudio.paperkit.annotate.Annotate
 import online.viestudio.paperkit.annotate.DeclareFileOrDefaultsConfig
 import online.viestudio.paperkit.annotate.Export
+import online.viestudio.paperkit.common.Fun
 import online.viestudio.paperkit.common.Type
 import online.viestudio.paperkit.utils.findAnnotation
 
@@ -43,7 +46,36 @@ internal class PaperKitProcessor(
         ) + processAnnotation<KSClassDeclaration>(
             "DeclareFileOrDefaultsConfig",
             ConfigVisitor()
+        ) + processAnnotation<KSClassDeclaration>(
+            "Service",
+            ServiceVisitor()
         )
+    }
+
+    private inner class ServiceVisitor : KSVisitorVoid() {
+
+        override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
+            val isListener = classDeclaration.getAllSuperTypes().any { it.toTypeName() == Type.KIT_LISTENER }
+            if (!isListener) return
+            builder.export(classDeclaration, classDeclaration.asStarProjectedType())
+            builder.callOnStart {
+                addStatement(
+                    "%M<%T>().%M()",
+                    Fun.KOIN_GET,
+                    classDeclaration.toClassName(),
+                    Fun.KOIN_BIND,
+                    Fun.KIT_LISTENER_REGISTER
+                )
+            }.callOnStop {
+                addStatement(
+                    "%M<%T>().%M()",
+                    Fun.KOIN_GET,
+                    classDeclaration.toClassName(),
+                    Fun.KOIN_BIND,
+                    Fun.KIT_LISTENER_UNREGISTER
+                )
+            }
+        }
     }
 
     private inner class ConfigVisitor : KSVisitorVoid() {

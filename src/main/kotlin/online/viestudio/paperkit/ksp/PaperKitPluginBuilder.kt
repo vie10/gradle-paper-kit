@@ -80,6 +80,14 @@ internal class PaperKitPluginBuilder {
         origin(commandClass)
     }
 
+    fun callOnStart(block: CodeBlock.Builder.() -> Unit) = apply {
+        onStart.addCode(CodeBlock.builder().apply(block).build())
+    }
+
+    fun callOnStop(block: CodeBlock.Builder.() -> Unit) = apply {
+        onStop.addCode(CodeBlock.builder().apply(block).build())
+    }
+
     fun callOnStart(function: KSFunctionDeclaration) = apply {
         call(function)(onStart)
     }
