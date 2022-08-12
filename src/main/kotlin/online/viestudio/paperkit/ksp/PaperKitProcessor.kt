@@ -64,7 +64,6 @@ internal class PaperKitProcessor(
                     "%M<%T>().%M()",
                     Fun.KOIN_GET,
                     classDeclaration.toClassName(),
-                    Fun.KOIN_BIND,
                     Fun.KIT_LISTENER_REGISTER
                 )
             }.callOnStop {
@@ -72,7 +71,6 @@ internal class PaperKitProcessor(
                     "%M<%T>().%M()",
                     Fun.KOIN_GET,
                     classDeclaration.toClassName(),
-                    Fun.KOIN_BIND,
                     Fun.KIT_LISTENER_UNREGISTER
                 )
             }
