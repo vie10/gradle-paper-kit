@@ -1,4 +1,4 @@
-package online.viestudio.paperkit.utils
+package dev.viesoft.paperkit.utils
 
 import com.google.devtools.ksp.symbol.KSAnnotation
 import com.google.devtools.ksp.symbol.KSClassDeclaration

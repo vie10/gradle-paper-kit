@@ -1,4 +1,4 @@
-package online.viestudio.paperkit.ksp
+package dev.viesoft.paperkit.ksp
 
 import com.google.auto.service.AutoService
 import com.google.devtools.ksp.processing.SymbolProcessor

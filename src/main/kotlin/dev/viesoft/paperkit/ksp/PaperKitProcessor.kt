@@ -1,4 +1,4 @@
-package online.viestudio.paperkit.ksp
+package dev.viesoft.paperkit.ksp
 
 import com.google.devtools.ksp.getAllSuperTypes
 import com.google.devtools.ksp.processing.CodeGenerator
@@ -9,12 +9,12 @@ import com.google.devtools.ksp.symbol.*
 import com.google.devtools.ksp.validate
 import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.toTypeName
-import online.viestudio.paperkit.annotate.Annotate
-import online.viestudio.paperkit.annotate.DeclareFileOrDefaultsConfig
-import online.viestudio.paperkit.annotate.Export
-import online.viestudio.paperkit.common.Fun
-import online.viestudio.paperkit.common.Type
-import online.viestudio.paperkit.utils.findAnnotation
+import dev.viesoft.paperkit.annotation.AnnotationHelper
+import dev.viesoft.paperkit.annotation.DeclareFileOrDefaultsConfig
+import dev.viesoft.paperkit.annotation.Export
+import dev.viesoft.paperkit.common.Fun
+import dev.viesoft.paperkit.common.Type
+import dev.viesoft.paperkit.utils.findAnnotation
 
 internal class PaperKitProcessor(
     private val logger: KSPLogger,
@@ -146,7 +146,7 @@ internal class PaperKitProcessor(
         name: String,
         visitor: KSVisitor<Unit, Unit>,
     ): List<KSAnnotated> {
-        val symbols = getSymbolsWithAnnotation(Annotate.resolve(name))
+        val symbols = getSymbolsWithAnnotation(AnnotationHelper.resolveAnnotationFQN(name))
         symbols.filter { it is T && it.validate() }.forEach {
             it.accept(visitor, Unit)
         }

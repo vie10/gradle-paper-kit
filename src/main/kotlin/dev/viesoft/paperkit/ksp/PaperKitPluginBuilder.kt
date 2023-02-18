@@ -1,4 +1,4 @@
-package online.viestudio.paperkit.ksp
+package dev.viesoft.paperkit.ksp
 
 import com.google.devtools.ksp.closestClassDeclaration
 import com.google.devtools.ksp.processing.CodeGenerator
@@ -12,11 +12,11 @@ import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.toTypeName
 import com.squareup.kotlinpoet.ksp.writeTo
-import online.viestudio.paperkit.common.Fun
-import online.viestudio.paperkit.common.Type
+import dev.viesoft.paperkit.common.Fun
+import dev.viesoft.paperkit.common.Type
 
 private const val CLASS_NAME = "AnnotationDrivenPlugin"
-private const val CLASS_PACKAGE = "online.viestudio.paperkit.plugin"
+private const val CLASS_PACKAGE = "dev.viesoft.paperkit.plugin"
 
 internal class PaperKitPluginBuilder {
 

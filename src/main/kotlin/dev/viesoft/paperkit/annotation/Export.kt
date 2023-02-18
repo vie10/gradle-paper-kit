@@ -1,4 +1,4 @@
-package online.viestudio.paperkit.annotate
+package dev.viesoft.paperkit.annotation
 
 import kotlin.reflect.KClass
 
